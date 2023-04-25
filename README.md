@@ -16,12 +16,26 @@ The digitization pipeline consists of two stages: (1) fine tuning a layout detec
 
 #### Annotations
 
-All the annotations are available as a .json file [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0), and as a COCO dataset [here](https://www.dropbox.com/s/gdpujktygeg79fm/annotations_woodcroft_patents.zip?dl=0). The original annotations can be edited and re-exported by importing the linked .json file into a [Label Studio](https://labelstud.io) project. The accompanying annotation schema is available [here](https://www.dropbox.com/s/bq9gqciksoxk6l8/annotation_schema.pdf?dl=0). The annotated bounding boxes can be visualized from the COCO dataset using the script [visualize_bounding_boxes.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/tools/visualize_bounding_boxes.py).
+All the annotations are available as a .json file [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0), and as a COCO dataset [here](https://www.dropbox.com/s/gdpujktygeg79fm/annotations_woodcroft_patents.zip?dl=0). The original annotations can be edited and re-exported by importing the linked .json file into a [Label Studio](https://labelstud.io) project. The accompanying annotation schema is available [here](https://www.dropbox.com/s/bq9gqciksoxk6l8/annotation_schema.pdf?dl=0). The annotated bounding boxes can be visualized from the COCO dataset using the script [visualize_bounding_boxes.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/visualize_bounding_boxes.py).
 
-For ease of annotation in Label Studio, the original images were compressed to 20% of their original quality using the script [compress_images.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/tools/compress_images.py) (the quality parameter can be adjusted). To run this script, you need a single directory containing all the images you are looking to compress. 
+For ease of annotation in Label Studio, the original images were compressed to 20% of their original quality using the script [compress_images.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/compress_images.py) (the quality parameter can be adjusted). To run this script, you need a single directory containing all the images you are looking to compress. 
 
-In order to create a COCO dataset with segmentation masks, where the annotated masks are equivalent to the area enclosed by the annotated bounding box coordinates, you can run the script [create_seg_masks.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/tools/create_seg_masks.py) using the linked COCO dataset. This will be necessary in order to train layout detection models that require segmentation masks (e.g. Mask-RCNN).
+In order to create a COCO dataset with segmentation masks, where the annotated masks are equivalent to the area enclosed by the annotated bounding box coordinates, you can run the script [create_seg_masks.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/create_seg_masks.py) using the linked COCO dataset. This will be necessary in order to train layout detection models that require segmentation masks (e.g. Mask-RCNN).
 
-#### Fine Tuning
+#### Fine Tuning Layout Detection Models
+
+The notebook for implementing fine tuning of the layout detection models is [detectron2_training.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/detectron2_training.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
+
+#### Inference and OCR 
+
+This project uses GCV called from Layout Parser to digitize the text located within predicted bounding boxes. To get started with GCV, you are required to have a credentials file. To obtain a credentials file, you require a Google account. Instructions on setting up your credentials can be found [here](https://developers.google.com/workspace/guides/create-credentials). 
+
+The notebook for running inference for layout detection and OCR to extract the text is [gcv_ocr.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/gcv_ocr.ipynb). To run inference, you need a single directory containing all the images you are looking to digitize. I use a single directory for all the page scans for a given year, and run inference through all the directories (years). You also need to upload the model configuration file and the weights from training.
+
+The notebook for visualizing the layout model predictions and OCR output on a small number of scans before running inference is [model_prediction_visualizer_gcv.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/model_prediction_visualizer_gcv.ipynb). There is also an equivalent notebook [model_prediction_visualizer_tesseract.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/model_prediction_visualizer_tesseract.ipynb) for visualizing Tesseract OCR output. However, I find Tesseract's performance on these records to be particularly poor.
+
+#### Post-OCR cleaning
+
+The notebook for running inference performs OCR at the page-level. It generates a text file with the same name as the original image file in the same directory. The script for merging all of these text files within the same directory is [merge_ocr_output.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/merge_ocr_output.py). You may need to modify the script accordingly depending on the naming of the original image files. The script [post_ocr_layout_correct.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/post_ocr_layout_correct.py) then modifies the merged OCR output to ensure there is a single separator between each digitized bounding box of text and that leading and trailing spaces before and after separators are removed.
 
 
