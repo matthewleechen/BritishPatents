@@ -21,3 +21,7 @@ All the annotations are available as a .json file [here](https://www.dropbox.com
 For ease of annotation in Label Studio, the original images were compressed to 20% of their original quality using the script [compress_images.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/tools/compress_images.py) (the quality parameter can be adjusted). To run this script, you need a single directory containing all the images you are looking to compress. 
 
 In order to create a COCO dataset with segmentation masks, where the annotated masks are equivalent to the area enclosed by the annotated bounding box coordinates, you can run the script [create_seg_masks.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/tools/create_seg_masks.py) using the linked COCO dataset. This will be necessary in order to train layout detection models that require segmentation masks (e.g. Mask-RCNN).
+
+#### Fine Tuning
+
+
