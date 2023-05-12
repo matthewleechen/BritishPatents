@@ -38,4 +38,6 @@ The notebook for visualizing the layout model predictions and OCR output on a sm
 
 The notebook for running inference performs OCR at the page-level. It generates a text file with the same name as the original image file in the same directory. The script for merging all of these text files within the same directory is [merge_ocr_output.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/merge_ocr_output.py). You may need to modify the script accordingly depending on the naming of the original image files. The script [post_ocr_layout_correct.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/post_ocr_layout_correct.py) then modifies the merged OCR output to ensure there is a single separator between each digitized bounding box of text and that leading and trailing spaces before and after separators are removed.
 
+#### Named Entity Recognition
 
+In progress...
