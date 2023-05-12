@@ -24,7 +24,7 @@ In order to create a COCO dataset with segmentation masks, where the annotated m
 
 #### Fine Tuning Layout Detection Models
 
-The notebook for implementing fine tuning of the layout detection models is [detectron2_training.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/detectron2_training.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
+The notebook for implementing fine tuning of the layout detection models is [fine_tuning.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/fine_tuning.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
 
 #### Inference and OCR 
 
