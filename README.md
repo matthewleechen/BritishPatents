@@ -42,14 +42,10 @@ python seg.py --image-id <image_id> --image-path /path/to/image --annotations-pa
 
 #### Fine Tuning Layout Detection Models
 
-The notebook for implementing fine tuning of the layout detection models is [fine_tuning.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/fine_tuning.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
+The notebook for implementing fine tuning of the layout detection models is [fine_tuning.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/fine_tuning.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
 
 #### Inference and OCR 
 
 This project uses GCV called from Layout Parser to digitize the text located within predicted bounding boxes. To get started with GCV, you are required to have a credentials file. To obtain a credentials file, you require a Google account. Instructions on setting up your credentials can be found [here](https://developers.google.com/workspace/guides/create-credentials). 
 
-The notebook for running inference for layout detection and OCR to extract the text is [inference.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/inference.ipynb). To run inference, you need a single directory containing all the images you are looking to digitize. I use a single directory for all the page scans for a given year, and run inference through all the directories (years). You also need to upload the model configuration file and the weights from training.
-
-The notebook for visualizing the layout model predictions and OCR output on a small number of scans before running inference is [model_prediction_visualizer_gcv.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/model_prediction_visualizer_gcv.ipynb). There is also an equivalent notebook [model_prediction_visualizer_tesseract.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/notebooks/model_prediction_visualizer_tesseract.ipynb) for visualizing Tesseract OCR output. However, I find Tesseract's performance on these records to be particularly poor.
-
-The notebook for running inference performs OCR at the page-level. It generates a text file with the same name as the original image file in the same directory. It also merges all of the text files within the same directory and then modifies the merged OCR output to ensure there is a single separator between each digitized bounding box of text.
+The notebook for running inference for layout detection and OCR to extract the text is [inference.ipynb](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/inference.ipynb). To run inference, you need a single directory containing all the images you are looking to digitize. I use a single directory for all the page scans for a given year, and run inference through all the directories (years). You also need to upload the model configuration file and the weights from training. The notebook also allows you to visualize the layout model predictions on specific images.
