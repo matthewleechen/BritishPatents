@@ -1,7 +1,8 @@
 import os
 
 '''
-Text files are in the format: chron_{year and vol/date info}_{page number}.txt
+Text files are in the format: chron_{year and vol/date info}_{page number}.txt (inherited from the format of the original image files).
+You will likely need to amend the get_page_number function depending on the format of your original image files.
 
 '''
 
