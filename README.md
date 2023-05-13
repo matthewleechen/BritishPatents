@@ -22,6 +22,8 @@ All the annotations are available as a .json file [here](https://www.dropbox.com
 python visualize_bounding_boxes.py /path/to/image <image_id> /path/to/result.json
 ```
 
+The images I select for manual labelling include all 1853 scans, and a sample of scans from 1617-1852, 1869, 1870 and 1871. Faster-RCNN and Mask-RCNN were both fine tuned on the full sample of annotations. I fine tuned Fast-RCNN only on the 1853 subsample, which is accessible as a COCO dataset [here](https://www.dropbox.com/s/idx7xe2ozl5hcj3/annotations_woodcroft_patents_1853.zip?dl=0).
+
 For ease of annotation in Label Studio, the original images were compressed to 20% of their original quality using the script [compress_images.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/compress_images.py) (the ```<quality>``` parameter can be adjusted from 1-95\%, and the ```<filetype>``` parameter specifies the file format e.g. jpg, png, jp2). To run this script, you need a directory containing all the images you are looking to compress. Then you can use
 
 ```
