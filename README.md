@@ -16,11 +16,29 @@ The digitization pipeline consists of two stages: (1) fine tuning a layout detec
 
 #### Annotations
 
-All the annotations are available as a .json file [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0), and as a COCO dataset [here](https://www.dropbox.com/s/gdpujktygeg79fm/annotations_woodcroft_patents.zip?dl=0). The original annotations can be edited and re-exported by importing the linked .json file into a [Label Studio](https://labelstud.io) project. The accompanying annotation schema is available [here](https://www.dropbox.com/s/bq9gqciksoxk6l8/annotation_schema.pdf?dl=0). The annotated bounding boxes can be visualized from the COCO dataset using the script [visualize_bounding_boxes.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/visualize_bounding_boxes.py).
+All the annotations are available as a .json file [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0), and as a COCO dataset [here](https://www.dropbox.com/s/gdpujktygeg79fm/annotations_woodcroft_patents.zip?dl=0). The original annotations can be edited and re-exported by importing the linked .json file into a [Label Studio](https://labelstud.io) project. The accompanying annotation schema is available [here](https://www.dropbox.com/s/bq9gqciksoxk6l8/annotation_schema.pdf?dl=0). The annotated bounding boxes can be visualized from the COCO dataset using the script [visualize_bounding_boxes.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/visualize_bounding_boxes.py). To run this script from the command line, assuming your COCO annotations are contained in the file ```result.json```, you can use
 
-For ease of annotation in Label Studio, the original images were compressed to 20% of their original quality using the script [compress_images.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/compress_images.py) (the quality parameter can be adjusted). To run this script, you need a single directory containing all the images you are looking to compress. 
+```
+python visualize_bounding_boxes.py /path/to/image <image_id> /path/to/result.json
+```
 
-In order to create a COCO dataset with segmentation masks, where the annotated masks are equivalent to the area enclosed by the annotated bounding box coordinates, you can run the script [create_seg_masks.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/create_seg_masks.py) using the linked COCO dataset. This will be necessary in order to train layout detection models that require segmentation masks (e.g. Mask-RCNN).
+For ease of annotation in Label Studio, the original images were compressed to 20% of their original quality using the script [compress_images.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/compress_images.py) (the ```<quality>``` parameter can be adjusted from 1-95\%, and the ```<filetype>``` parameter specifies the file format e.g. jpg, png, jp2). To run this script, you need a directory containing all the images you are looking to compress. Then you can use
+
+```
+python compress_images.py /path/to/directory <filetype> --quality <quality>
+```
+
+In order to create a COCO dataset with segmentation masks, where the annotated masks are equivalent to the area enclosed by the annotated bounding box coordinates, you can run the script [create_seg_masks.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/create_seg_masks.py) using the linked COCO dataset. This script will produce an output file ```new_results.json``` that contains segmentation masks. This will be necessary in order to train layout detection models that require segmentation masks (e.g. Mask-RCNN). To run this script, you can use
+
+```
+python create_seg_masks.py --annotations /path/to/result.json
+```
+
+The script to visualize the segmentation masks is [visualize_seg_masks.py](https://github.com/matthewleechen/digitize_woodcroft_patents/blob/main/scripts/visualize_seg_masks.py). To run this script, you can use
+
+```
+python seg.py --image-id <image_id> --image-path /path/to/image --annotations-path /path/to/new_results.json
+```
 
 #### Fine Tuning Layout Detection Models
 
