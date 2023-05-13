@@ -1,8 +1,16 @@
+import argparse
 import json
 import cv2
 
-# Load the annotations from the result.json file (COCO format)
-with open('result.json', 'r') as f:
+parser = argparse.ArgumentParser(description='Visualize annotated bounding boxes')
+parser.add_argument('image_path', type=str, help='path to the image file')
+parser.add_argument('image_id', type=int, help='ID of the image to visualize')
+parser.add_argument('annotations_path', type=str, help='path to the annotations file (in COCO format)')
+
+args = parser.parse_args()
+
+# Load the annotations from the COCO format file
+with open(args.annotations_path, 'r') as f:
     data = json.load(f)
 
 annotations = data['annotations']
@@ -10,12 +18,16 @@ image_ids = data['images']
 categories = data['categories']
 
 # Get the image information
-image_info = image_ids[0] # Change image_id: default 0
-image = cv2.imread('/path/to/image') # File path to image with corresponding image_id
+for image_info in image_ids:
+    if image_info['id'] == args.image_id:
+        break
+
+# Load the image
+image = cv2.imread(args.image_path)
 
 # Loop over each annotation and draw the bounding box
 for anno in annotations:
-    if anno['image_id'] == image_info['id']:
+    if anno['image_id'] == args.image_id:
         # Convert bounding box values to integers
         x, y, w, h = [int(val) for val in anno['bbox']]
         # Draw the bounding box on the image
@@ -25,3 +37,4 @@ for anno in annotations:
 cv2.imshow('image with bounding boxes', image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
