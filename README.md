@@ -1,4 +1,4 @@
-## Digitizing patent records
+## Digitizing British patent records (1617-1871)
 This repository contains the implementation for a deep learning pipeline to provide a clean digitization of the following records written by Bennett Woodcroft:
 * Titles of Patents of Invention, Chronologically Arranged _(Mar 1617-Oct 1852)_ 
 * Chronological Index of Patents Applied for and Patents Granted _(Oct 1852-Dec 1868)_
