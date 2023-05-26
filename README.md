@@ -1,4 +1,4 @@
-## Digitizing British patent records (1617-1871)
+## Curating a dataset of British patents (1617-1871)
 This repository contains the implementation for a deep learning pipeline to convert the following records written by Bennett Woodcroft into a structured dataset:
 * Titles of Patents of Invention, Chronologically Arranged _(Mar 1617-Oct 1852)_ 
 * Chronological Index of Patents Applied for and Patents Granted _(Oct 1852-Dec 1868)_
@@ -10,9 +10,9 @@ These records contain the universe of English patents issued between 1617 and 18
 
 <img src="https://user-images.githubusercontent.com/63355658/234250327-8c07b174-b576-4bf0-bc21-93614f8904d6.jpg" width="250"> <img src="https://user-images.githubusercontent.com/63355658/234250202-1fb6fbff-b3a8-4a58-99c6-4feccdf64abb.jpg" width="264.5">  <img src="https://user-images.githubusercontent.com/63355658/234250176-6104f0ba-3fe4-4945-b3ee-a61e0b5e6bfe.jpg" width="263">
 
-### OCR Pipeline
+### Digitization Pipeline
 
-The OCR pipeline consists of two stages: (1) fine tuning a layout detection model to predict bounding boxes around text; and (2) using Google Cloud Vision (GCV) to extract the text within the predicted bounding boxes. 
+The digitization pipeline consists of two stages: (1) fine tuning a layout detection model to predict bounding boxes around text; and (2) using Google Cloud Vision (GCV) to extract the text within the predicted bounding boxes. 
 
 #### Annotations
 
