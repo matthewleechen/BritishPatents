@@ -44,7 +44,7 @@ python seg.py --image-id <image_id> --image-path /path/to/image --annotations-pa
 
 #### Fine Tuning Layout Detection Models
 
-The notebook for implementing fine tuning of the layout detection models is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/notebooks/fine_tuning.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
+The Jupyter notebook for implementing fine tuning of the layout detection models is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/notebooks/fine_tuning.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
 
 #### Inference and GCV
 
