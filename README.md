@@ -88,5 +88,5 @@ The notebook for running inference using the fine tuned model is [inference.ipyn
 
 #### Post-Processing
 
-The inference process will result in a .csv file corresponding to each .txt file in the output directory. A Stata .do file that combines all .csv files and cleans the data is provided at [clean_ner_output.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/do_files/clean_ner_output.do).
+The inference process will result in a .csv file corresponding to each .txt file in the output directory. A Stata .do file that combines all .csv files and cleans the data is provided at [clean_ner_output.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/do_files/clean_ner_output.do). Errors can be manually cross-referenced against the raw image scans for accuracy.
 
