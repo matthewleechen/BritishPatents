@@ -3,8 +3,8 @@
 ///// at https://github.com/matthewleechen/ner_patents/blob/main/inference.ipynb.
 *-----------------------------------------------------------------------------------*
 ///// To run this code, you require a working directory containing the NER output
-///// and a subfolder of this directory called "ner_output" containing all outputted
-///// .csv files from "inference.ipynb", patent quality data as .csv files.
+///// as a subfolder called "ner_output" containing all outputted .csv files from
+///// "inference.ipynb", patent quality data as .csv files.
 *-----------------------------------------------------------------------------------* 
 /// Dependencies:
 /// ssc install egenmore
@@ -13,7 +13,7 @@
 *-----------------------------------------------------------------------------------*
 
 clear all
-cd "/path/to/directory" // set working directory here
+cd "/Users/matthewleechen/Documents/patent_characteristics" // set working directory here
 set more off
 
 *-----------------------------------------------------------------------------------*
@@ -253,3 +253,5 @@ replace loc = subinstr(loc, "", "",.)
 replace loc = subinstr(loc, char(34), "",.)
 replace loc = itrim(strtrim(loc))
 
+****** Save 
+save "cleaned_ner_output.dta", replace
