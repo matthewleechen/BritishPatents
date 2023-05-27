@@ -25,7 +25,7 @@ set more off
 * Import files and drop empty obs
 local list : dir ner_output files "*.csv"
 foreach f of local list {
-    qui: import delimited "ner_output/`f'", clear varnames(1)
+    qui: import delimited using "ner_output/`f'", clear varnames(1) encoding(UTF-8)
 	gen file_name = "`f'"
 	qui: save "`f'.dta", replace
     local append `append' "`f'.dta"
@@ -253,5 +253,5 @@ replace loc = subinstr(loc, "", "",.)
 replace loc = subinstr(loc, char(34), "",.)
 replace loc = itrim(strtrim(loc))
 
-****** Save output to directory
+****** Generate unique id and save
 save "cleaned_ner_output.dta", replace
