@@ -54,7 +54,7 @@ The notebook for running inference for layout detection and OCR to extract the t
 
 ### Named entity recognition
 
-This section documents the fine tuning of a RoBERTa model for named entity recognition (NER) on the digitized patents.
+This section documents the fine tuning of a BERT model for named entity recognition (NER) on the digitized patents.
 
 #### Data cleaning
 
@@ -64,7 +64,7 @@ The final outputs from inference using the digitization pipeline are .txt files 
 python preprocess_ner.py /path/to/directory
 ```
 
-The merged text boxes that I use in this repository can be found [here](https://www.dropbox.com/s/0s2wjdeitufj8je/ocr_output.zip?dl=0). Because RoBERTa has a token limit of 512, and the patents containing rich administrative information (1617-1852 Vol. 1) or complete specification information (1869-1871) can be extremely long, I have omitted the specification or administrative information for selected patents where the descriptions are particularly lengthy. This output can be cross-referenced with the original images and annotations, available [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0). Each merged text box represents a single filed patent. Based on my own cross-referencing, the merged OCR output seems to be accurate.
+The merged text boxes that I use in this repository can be found [here](https://www.dropbox.com/s/0s2wjdeitufj8je/ocr_output.zip?dl=0). Because BERT has a token limit of 512, and the patents containing rich administrative information (1617-1852 Vol. 1) or complete specification information (1869-1871) can be extremely long, I have omitted the specification or administrative information for selected patents where the descriptions are particularly lengthy. This output can be cross-referenced with the original images and annotations, available [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0). Each merged text box represents a single filed patent. Based on my own cross-referencing, the merged OCR output seems to be accurate.
 
 #### Annotations
 
@@ -78,9 +78,9 @@ This .json file is then uploaded to a Label Studio project task-by-task for labe
 
 The annotations were made in a [Label Studio](https://labelstud.io) project. All the annotations are available as a .conll file [here](https://www.dropbox.com/s/k2tkl0ftlj1i26x/ner_patents.conll?dl=0) (and as a .json file [here](https://www.dropbox.com/s/jqmnaml3s16jha5/ner_patents.json?dl=0)). The original annotations can be edited and re-exported by importing the linked .json file into a Label Studio project.
 
-#### Fine-tuning RoBERTa
+#### Fine-tuning BERT
 
-The Jupyter notebook for fine-tuning RoBERTa is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/notebooks/fine_tuning.ipynb). This notebook is a slightly modified version of Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
+The Jupyter notebook for fine-tuning BERT is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/notebooks/fine_tuning.ipynb). This notebook is a slightly modified version of Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
 
 #### Inference
 
