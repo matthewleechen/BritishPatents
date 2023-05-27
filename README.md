@@ -90,6 +90,10 @@ The notebook for running inference using the fine tuned model is [inference.ipyn
 
 The inference process will result in a .csv file corresponding to each .txt file in the output directory. A Stata .do file that combines all .csv files and cleans the data is provided at [clean_ner_output.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/do_files/clean_ner_output.do). Errors can be manually cross-referenced against the raw image scans for accuracy.
 
+### Georeferencing locations 
+
+This section links the digitized locations from the NER output to the _Gazetteer of British Place Names_ (.csv downloadable [here](https://gazetteer.org.uk/index)), which contains a georeferenced historical place name index for 280,000 locations in the United Kingdom. The Stata .do file [georef_locs.do]() implements the linking.
+
 ### Industry classifications
 
 Given the information contained in the "MISC" NER class, this section trains a RoBERTa model to classify inventions into industry categories.
