@@ -80,7 +80,7 @@ The annotations were made in a [Label Studio](https://labelstud.io) project. All
 
 #### Fine-tuning RoBERTa
 
-The notebook for fine-tuning RoBERTa is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/notebooks/fine_tuning.ipynb). This notebook is a slightly modified version of Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
+The Jupyter notebook for fine-tuning RoBERTa is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/notebooks/fine_tuning.ipynb). This notebook is a slightly modified version of Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
 
 #### Inference
 
