@@ -253,5 +253,5 @@ replace loc = subinstr(loc, "", "",.)
 replace loc = subinstr(loc, char(34), "",.)
 replace loc = itrim(strtrim(loc))
 
-****** Generate unique id and save
+****** Save output to directory
 save "cleaned_ner_output.dta", replace
