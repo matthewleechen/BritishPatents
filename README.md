@@ -92,7 +92,7 @@ The inference process will result in a .csv file corresponding to each .txt file
 
 ### Georeferencing locations 
 
-This section links the digitized locations from the NER output to the _Gazetteer of British Place Names_ (.csv downloadable [here](https://gazetteer.org.uk/index)), which contains a georeferenced historical place name index for 280,000 locations in the United Kingdom. The Stata .do file [georef_locs.do]() implements the linking.
+This section links the digitized locations from the NER output to the _Gazetteer of British Place Names_ (.csv downloadable [here](https://gazetteer.org.uk/index)), which contains a georeferenced historical place name index for almost 300,000 locations (as of June 2021) in the United Kingdom. The Stata .do file [georef_locs.do]() implements the linking.
 
 ### Industry classifications
 
