@@ -6,7 +6,7 @@ This repository contains the implementation for a deep learning pipeline to conv
 
 The original page scans can be found across the [Internet Archive](https://archive.org/search?query=creator%3A%22Great+Britain.+Patent+Office%22), [Hathitrust](https://catalog.hathitrust.org/Record/101716274?type%5B%5D=all&lookfor%5B%5D=chronological%20index%20of%20patents&ft=ft) and [Google Books](https://www.google.com/search?hl=en&sxsrf=APwXEdeJNdCG7Aq1TS0ZjtwvOpmrV_635w:1682421539341&q=inauthor:%22Bennet+Woodcroft%22&tbm=bks). These also contained digitized text, but the layouts of these documents almost always result in poor quality OCR. This repository intends to provide an implementation that will yield sufficiently high quality OCR that can be used for downstream tasks such as named entity recognition and record linkage.
 
-These records contain the universe of English patents issued between 1617 and 1852, and all British patents issued between 1853 and 1871. All records contain patent numbers and patentee information including full names, as well as location and occupational information. See below for example page scans of these records.
+These records contain the universe of English patents issued between 1617 and 1852, and all British patents issued between 1853 and 1871. All records contain patent numbers and patentee information including full names, and a large number contain additional location and occupational information. See below for example page scans of these records.
 
 <img src="https://user-images.githubusercontent.com/63355658/234250327-8c07b174-b576-4bf0-bc21-93614f8904d6.jpg" width="250"> <img src="https://user-images.githubusercontent.com/63355658/234250202-1fb6fbff-b3a8-4a58-99c6-4feccdf64abb.jpg" width="264.5">  <img src="https://user-images.githubusercontent.com/63355658/234250176-6104f0ba-3fe4-4945-b3ee-a61e0b5e6bfe.jpg" width="263">
 
@@ -42,7 +42,7 @@ The script to visualize the segmentation masks is [visualize_seg_masks.py](https
 python seg.py --image-id <image_id> --image-path /path/to/image --annotations-path /path/to/new_results.json
 ```
 
-#### Fine Tuning Layout Detection Models
+#### Fine Tuning 
 
 The Jupyter notebook for implementing fine tuning of the layout detection models is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/notebooks/fine_tuning.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
 
@@ -78,9 +78,9 @@ This .json file is then uploaded to a Label Studio project task-by-task for labe
 
 The annotations were made in a [Label Studio](https://labelstud.io) project. All the annotations are available as a .conll file [here](https://www.dropbox.com/s/k2tkl0ftlj1i26x/ner_patents.conll?dl=0) (and as a .json file [here](https://www.dropbox.com/s/jqmnaml3s16jha5/ner_patents.json?dl=0)). The original annotations can be edited and re-exported by importing the linked .json file into a Label Studio project.
 
-#### Fine-tuning BERT
+#### Fine-Tuning
 
-The Jupyter notebook for fine-tuning BERT is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/notebooks/fine_tuning.ipynb). This notebook is a slightly modified version of Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
+The Jupyter notebook for fine tuning BERT is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/notebooks/fine_tuning.ipynb). This notebook is a slightly modified version of Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
 
 #### Inference
 
@@ -89,4 +89,20 @@ The notebook for running inference using the fine tuned model is [inference.ipyn
 #### Post-Processing
 
 The inference process will result in a .csv file corresponding to each .txt file in the output directory. A Stata .do file that combines all .csv files and cleans the data is provided at [clean_ner_output.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/do_files/clean_ner_output.do). Errors can be manually cross-referenced against the raw image scans for accuracy.
+
+### Industry classifications
+
+Given the information contained in the "MISC" NER class, this section trains a RoBERTa model to classify inventions into industry categories.
+
+#### Annotations 
+
+The annotated data is from the industry labels in [Nuvolari, Tartari & Tranchero (2021)](https://www.sciencedirect.com/science/article/pii/S0014498321000413#sec0014), _Patterns of innovation during the Industrial Revolution: A reappraisal using a composite indicator of patent quality_. Their data (available at openICPSR, linked [here](https://www.openicpsr.org/openicpsr/project/142801/version/V1/view)) contains labels for every patent between 1700-1850. These labels are based on the categories from their earlier paper, [Nuvolari & Tartari (2011)](https://www.sciencedirect.com/science/article/pii/S0014498310000471), _Bennet Woodcroft and the value of English patents, 1617–1841_. 
+
+I use the Nuvolari, Tartari & Tranchero (2021) labels for the period 1700-1850 as the ground truth to train a RoBERTa model to predict industry classes for the uncategorized patents between 1851-1871. First, I link the NER output dataset with their data to create a labelled dataset. The Stata code to do this is in [link_industries.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/industry_class/do_files/link_industries.do).
+
+#### Fine Tuning
+
+#### Inference
+
+
 
