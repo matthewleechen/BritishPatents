@@ -254,6 +254,4 @@ replace loc = subinstr(loc, char(34), "",.)
 replace loc = itrim(strtrim(loc))
 
 ****** Generate unique id and save
-gen id = _n
 save "cleaned_ner_output.dta", replace
-export delimited id misc using "descriptions.csv", replace // for industry classifications 
