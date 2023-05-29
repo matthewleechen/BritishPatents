@@ -130,7 +130,7 @@ I use the Nuvolari, Tartari & Tranchero (2021) labels for the period 1700-1850 a
 
 #### Fine Tuning & Inference
 
-The Jupyter notebook for implementing fine tuning and inference using MacBERTh is [industry_class_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/notebooks/industry_class_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/matthewleechen/Transformers-Tutorials/blob/master/BERT/Fine_tuning_BERT_(and_friends)_for_multi_label_text_classification.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
+The Jupyter notebook for implementing fine tuning and inference using MacBERTh is [industry_class_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/notebooks/industry_class_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/matthewleechen/Transformers-Tutorials/blob/master/BERT/Fine_tuning_BERT_(and_friends)_for_multi_label_text_classification.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). The notebook output will be an .xlsx dataset.
 
 
 
