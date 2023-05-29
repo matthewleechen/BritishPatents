@@ -17,7 +17,7 @@ The digitization pipeline consists of two stages: (1) fine tuning a layout detec
 
 #### Annotations
 
-All the annotations are available as a .json file [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0), and as a COCO dataset [here](https://www.dropbox.com/s/gdpujktygeg79fm/annotations_woodcroft_patents.zip?dl=0). The original annotations can be edited and re-exported by importing the linked .json file into a [Label Studio](https://labelstud.io) project. The accompanying annotation schema is available [here](https://www.dropbox.com/s/bq9gqciksoxk6l8/annotation_schema.pdf?dl=0). The annotated bounding boxes can be visualized from the COCO dataset using the script [visualize_bounding_boxes.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/scripts/visualize_bounding_boxes.py). To run this script from the command line, assuming your COCO annotations are contained in the file ```result.json```, you can use
+All the annotations are available as a .json file [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0), and as a COCO dataset [here](https://www.dropbox.com/s/gdpujktygeg79fm/annotations_woodcroft_patents.zip?dl=0). The original annotations can be edited and re-exported by importing the linked .json file into a [Label Studio](https://labelstud.io) project. The accompanying annotation schema is available [here](https://www.dropbox.com/s/bq9gqciksoxk6l8/annotation_schema.pdf?dl=0). The annotated bounding boxes can be visualized from the COCO dataset using the script [visualize_bounding_boxes.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/visualize_bounding_boxes.py). To run this script from the command line, assuming your COCO annotations are contained in the file ```result.json```, you can use
 
 ```
 python visualize_bounding_boxes.py /path/to/image <image_id> /path/to/result.json
@@ -25,19 +25,19 @@ python visualize_bounding_boxes.py /path/to/image <image_id> /path/to/result.jso
 
 The images I select for manual labelling include all 1853 scans, and a sample of scans from 1617-1852, 1869, 1870 and 1871. Faster-RCNN and Mask-RCNN were both fine tuned on the full sample of annotations. I fine tuned Fast-RCNN only on the 1853 subsample, which is accessible as a COCO dataset [here](https://www.dropbox.com/s/idx7xe2ozl5hcj3/annotations_woodcroft_patents_1853.zip?dl=0).
 
-For ease of annotation in Label Studio, the original images were compressed to 20% of their original quality using the script [compress_images.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/scripts/compress_images.py) (the ```<quality>``` parameter can be adjusted from 1-95\%, and the ```<filetype>``` parameter specifies the file format e.g. jpg, png, jp2). To run this script, you need a directory containing all the images you are looking to compress. Then you can use
+For ease of annotation in Label Studio, the original images were compressed to 20% of their original quality using the script [compress_images.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/compress_images.py) (the ```<quality>``` parameter can be adjusted from 1-95\%, and the ```<filetype>``` parameter specifies the file format e.g. jpg, png, jp2). To run this script, you need a directory containing all the images you are looking to compress. Then you can use
 
 ```
 python compress_images.py /path/to/directory <filetype> --quality <quality>
 ```
 
-In order to create a COCO dataset with segmentation masks, where the annotated masks are equivalent to the area enclosed by the annotated bounding box coordinates, you can run the script [create_seg_masks.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/scripts/create_seg_masks.py) using the linked COCO dataset. This script will produce an output file ```new_results.json``` that contains segmentation masks. This will be necessary in order to train layout detection models that require segmentation masks (e.g. Mask-RCNN). To run this script, you can use
+In order to create a COCO dataset with segmentation masks, where the annotated masks are equivalent to the area enclosed by the annotated bounding box coordinates, you can run the script [create_seg_masks.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/create_seg_masks.py) using the linked COCO dataset. This script will produce an output file ```new_results.json``` that contains segmentation masks. This will be necessary in order to train layout detection models that require segmentation masks (e.g. Mask-RCNN). To run this script, you can use
 
 ```
 python create_seg_masks.py --annotations /path/to/result.json
 ```
 
-The script to visualize the segmentation masks is [visualize_seg_masks.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/scripts/visualize_seg_masks.py). To run this script, you can use
+The script to visualize the segmentation masks is [visualize_seg_masks.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/visualize_seg_masks.py). To run this script, you can use
 
 ```
 python seg.py --image-id <image_id> --image-path /path/to/image --annotations-path /path/to/new_results.json
@@ -45,7 +45,7 @@ python seg.py --image-id <image_id> --image-path /path/to/image --annotations-pa
 
 #### Fine Tuning and Inference
 
-The Jupyter notebook for implementing fine tuning and inference using the layout detection models is [layout_detect_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/layout_detect_patents.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
+The Jupyter notebook for implementing fine tuning and inference using the layout detection models is [layout_detect_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/notebooks/layout_detect_patents.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
 
 This project uses GCV called from Layout Parser to digitize the text located within predicted bounding boxes. To get started with GCV, you are required to have a credentials file. To obtain a credentials file, you require a Google account. Instructions on setting up your credentials can be found [here](https://developers.google.com/workspace/guides/create-credentials). 
 
@@ -74,7 +74,7 @@ This section documents the fine tuning of a BERT model for named entity recognit
 
 #### Data cleaning
 
-The final outputs from inference using the digitization pipeline are .txt files containing a list of digitized bounding boxes with separators (---) between them. Because the text files are merged in page order, the bounding boxes require merging, i.e. the first and second boxes should be merged, as should the third and fourth, and so on. This stage will almost surely require manual checks to ensure that duplicate or erroneous text boxes are dropped. After manual checks, you can run the script [preprocess_ner.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/scripts/preprocess_ner.py) to automate the box merging process. To run this script from the command line, assuming you have a directory containing all the .txt files, you can use
+The final outputs from inference using the digitization pipeline are .txt files containing a list of digitized bounding boxes with separators (---) between them. Because the text files are merged in page order, the bounding boxes require merging, i.e. the first and second boxes should be merged, as should the third and fourth, and so on. This stage will almost surely require manual checks to ensure that duplicate or erroneous text boxes are dropped. After manual checks, you can run the script [preprocess_ner.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/preprocess_ner.py) to automate the box merging process. To run this script from the command line, assuming you have a directory containing all the .txt files, you can use
 
 ```
 python preprocess_ner.py /path/to/directory
@@ -84,7 +84,7 @@ The merged text boxes that I use in this repository can be found [here](https://
 
 #### Annotations
 
-Annotations are made on a random sample of the patents. The script for randomly sampling a selected percentage (```<percent>```) of the patents and saving them to a .json file is [label_sample_select.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/scripts/label_sample_select.py). Note that the default percentage is 0.5% (```--percent 0.5```). This script generates a .json file, ```selected_patents.json``` when run. To run this, assuming you have a directory containing all the merged and cleaned .txt files, you can use
+Annotations are made on a random sample of the patents. The script for randomly sampling a selected percentage (```<percent>```) of the patents and saving them to a .json file is [label_sample_select.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/label_sample_select.py). Note that the default percentage is 0.5% (```--percent 0.5```). This script generates a .json file, ```selected_patents.json``` when run. To run this, assuming you have a directory containing all the merged and cleaned .txt files, you can use
 
 ```
 python label_sample_select.py /path/to/directory --percent <percent> --seed <random_seed>
@@ -96,7 +96,7 @@ The annotations were made in a [Label Studio](https://labelstud.io) project. All
 
 #### Fine-Tuning and Inference
 
-The Jupyter notebook for fine tuning BERT and running inference for named entity recognition is [ner_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/ner_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
+The Jupyter notebook for fine tuning BERT and running inference for named entity recognition is [ner_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
 
 To run inference, you are assumed to have an input directory consisting of .txt files that each correspond to one record book (e.g. ```input_dir```), and have an output directory that you want .csv files to exported to. The output is a .csv file containing the labelled classes as columns, and each patent being recorded as a row (observation). An example of your directory structure after running inference is:
 
@@ -116,7 +116,7 @@ working_dir
 
 #### Post-Processing
 
-The inference process will result in a .csv file corresponding to each .txt file in the output directory. A Stata .do file that combines all .csv files and cleans the data is provided at [clean_ner_output.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/do_files/clean_ner_output.do). Errors can be manually cross-referenced against the raw image scans for accuracy.
+The inference process will result in a .csv file corresponding to each .txt file in the output directory. A Stata .do file that combines all .csv files and cleans the data is provided at [clean_ner_output.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/dofiles/clean_ner_output.do). Errors can be manually cross-referenced against the raw image scans for accuracy.
 
 ### Industry classifications
 
@@ -126,11 +126,11 @@ Given the information contained in the "MISC" NER class, this section fine tunes
 
 The annotated data is from the industry labels in [Nuvolari, Tartari & Tranchero (2021)](https://www.sciencedirect.com/science/article/pii/S0014498321000413#sec0014), _Patterns of innovation during the Industrial Revolution: A reappraisal using a composite indicator of patent quality_. Their data (available at openICPSR, linked [here](https://www.openicpsr.org/openicpsr/project/142801/version/V1/view)) contains labels for every patent between 1700-1850. These labels are based on the categories from their earlier paper, [Nuvolari & Tartari (2011)](https://www.sciencedirect.com/science/article/pii/S0014498310000471), _Bennet Woodcroft and the value of English patents, 1617–1841_. 
 
-I use the Nuvolari, Tartari & Tranchero (2021) labels for the period 1700-1850 as the ground truth to train a RoBERTa model to predict industry classes for the uncategorized patents between 1851-1871. First, I link the NER output dataset with their data to create a labelled .csv dataset. The Stata code to do this is in [link_industries.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/industry_class/do_files/link_industries.do).
+I use the Nuvolari, Tartari & Tranchero (2021) labels for the period 1700-1850 as the ground truth to train a RoBERTa model to predict industry classes for the uncategorized patents between 1851-1871. First, I link the NER output dataset with their data to create a labelled .csv dataset. The Stata code to do this is in [link_industries.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/dofiles/link_industries.do).
 
 #### Fine Tuning & Inference
 
-The Jupyter notebook for implementing fine tuning and inference using MacBERTh is [industry_class_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/industry_class/industry_class_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/matthewleechen/Transformers-Tutorials/blob/master/BERT/Fine_tuning_BERT_(and_friends)_for_multi_label_text_classification.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
+The Jupyter notebook for implementing fine tuning and inference using MacBERTh is [industry_class_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/notebooks/industry_class_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/matthewleechen/Transformers-Tutorials/blob/master/BERT/Fine_tuning_BERT_(and_friends)_for_multi_label_text_classification.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
 
 
 
