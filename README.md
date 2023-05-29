@@ -95,7 +95,7 @@ The annotations were made in a [Label Studio](https://labelstud.io) project. All
 
 #### Fine-Tuning and Inference
 
-The Jupyter notebook for fine tuning BERT and running inference for named entity recognition is [ner_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/ner_patents.ipynb). This notebook is a modified version of Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
+The Jupyter notebook for fine tuning BERT and running inference for named entity recognition is [ner_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/ner_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
 
 To run inference, you are assumed to have an input directory consisting of .txt files that each correspond to one record book (e.g. ```input_dir```), and have an output directory that you want .csv files to exported to. The output is a .csv file containing the labelled classes as columns, and each patent being recorded as a row (observation). An example of your directory structure after running inference is:
 
