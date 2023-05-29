@@ -34,6 +34,7 @@ rename misc text
 
 * Output excel file as labelled data
 export excel using "labelled_data_patents.xlsx", firstrow(variables) replace
+erase "ner_output_1700-1850.dta"
 
 
 
