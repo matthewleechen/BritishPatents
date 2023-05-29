@@ -42,15 +42,30 @@ The script to visualize the segmentation masks is [visualize_seg_masks.py](https
 python seg.py --image-id <image_id> --image-path /path/to/image --annotations-path /path/to/new_results.json
 ```
 
-#### Fine Tuning 
+#### Fine Tuning and Inference
 
-The Jupyter notebook for implementing fine tuning of the layout detection models is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/notebooks/fine_tuning.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
-
-#### Inference and GCV
+The Jupyter notebook for implementing fine tuning and inference using the layout detection models is [layout_detect_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/layout_detect_patents.ipynb). This notebook uses models from [Detectron2](https://github.com/facebookresearch/detectron2) and is based on scripts from [Layout Parser](https://github.com/Layout-Parser/layout-model-training).
 
 This project uses GCV called from Layout Parser to digitize the text located within predicted bounding boxes. To get started with GCV, you are required to have a credentials file. To obtain a credentials file, you require a Google account. Instructions on setting up your credentials can be found [here](https://developers.google.com/workspace/guides/create-credentials). 
 
-The notebook for running inference for layout detection and OCR to extract the text is [inference.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/layout_detection/notebooks/inference.ipynb). To run inference, you need a single directory containing all the images you are looking to digitize. I use a single directory for all the page scans for a given record book, and run inference through all the directories (books). You also need to upload the model configuration file and the weights from training. The notebook also allows you to visualize the layout model predictions on specific images.
+The patent records are organized across multiple books. To run inference, you are suggested to have a single directory (e.g. ```patent_data_woodcroft```) containing all the subdirectories (with subdirectories corresponding to individual record books), each containing images you are looking to digitize. For example:
+```
+patent_data_woodcroft/
+└── chron_1617-1852-vol1/
+    ├── chron_1617-1852-vol1_0019.jp2
+    ├── chron_1617-1852-vol1_0020.jp2
+    ├── chron_1617-1852-vol1_0021.jp2
+    ...
+    ├── chron_1617-1852-vol1_0802.jp2
+└── chron_1617-1852-vol2/
+└── chron_1852-oct-dec/
+└── chron_1853/
+└── chron_1854/
+└── chron_1855/
+...
+└── chron_1871/
+```
+You also need to upload the model configuration file and the weights from training. The notebook also allows you to visualize the layout model predictions on specific images.
 
 ### Named entity recognition
 
@@ -78,13 +93,25 @@ This .json file is then uploaded to a Label Studio project task-by-task for labe
 
 The annotations were made in a [Label Studio](https://labelstud.io) project. All the annotations are available as a .conll file [here](https://www.dropbox.com/s/k2tkl0ftlj1i26x/ner_patents.conll?dl=0) (and as a .json file [here](https://www.dropbox.com/s/jqmnaml3s16jha5/ner_patents.json?dl=0)). The original annotations can be edited and re-exported by importing the linked .json file into a Label Studio project.
 
-#### Fine-Tuning
+#### Fine-Tuning and Inference
 
-The Jupyter notebook for fine tuning BERT is [fine_tuning.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/notebooks/fine_tuning.ipynb). This notebook is a slightly modified version of Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
+The Jupyter notebook for fine tuning BERT and running inference for named entity recognition is [ner_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/ner_patents.ipynb). This notebook is a modified version of Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
 
-#### Inference
+To run inference, you are assumed to have an input directory consisting of .txt files that each correspond to one record book (e.g. ```input_dir```), and have an output directory that you want .csv files to exported to. The output is a .csv file containing the labelled classes as columns, and each patent being recorded as a row (observation). An example of your directory structure after running inference is:
 
-The notebook for running inference using the fine tuned model is [inference.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/ner/notebooks/inference.ipynb). This assumes that you have an input directory consisting of .txt files, and have an output directory that you want .csv files to exported to. The output is a .csv file containing the labelled classes as columns, and each patent being recorded as a row (observation).
+```
+working_dir
+└── input_dir/
+    ├── merged_1617-1852-vol1.txt
+    ├── merged_1617-1852-vol2.txt
+    ...
+    ├── merged_1871.txt
+└── output_dir/
+    ├── merged_1617-1852-vol1.csv
+    ├── merged_1617-1852-vol2.csv
+    ...
+    ├── merged_1871.csv
+```
 
 #### Post-Processing
 
