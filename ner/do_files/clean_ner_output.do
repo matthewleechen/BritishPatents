@@ -107,20 +107,20 @@ rename comm_indicator comm
 ****** Clean names
 
 * Append continuations of names (based on ##)
-forvalues i = 1/11 {
+forvalues i = 1/15 {
 	qui replace per_`i' = per_`i' + substr(per_`=`i'+1', 3, .) if ///
 	strpos(per_`=`i'+1', "##") == 1
 }
 
 * Append continuations of names (based on single words)
-forvalues i = 1/11 {
+forvalues i = 1/15 {
 	qui replace per_`=`i'+1' = "" if strpos(per_`=`i'+1', "##") == 1
 	qui replace per_`i' = per_`i' + per_`=`i'+1' if strpos(per_`i', " ") == 0
 }
 
 * Remove substrings of other person variables
-forvalues i = 1/12 {
-	 forvalues j = 1/12 {
+forvalues i = 1/16 {
+	 forvalues j = 1/16 {
 	 	if `i' != `j' {
 			qui replace per_`i' = "" if ///
 			strpos(ustrtrim(per_`j'), ustrtrim(per_`i')) > 0 
@@ -129,7 +129,7 @@ forvalues i = 1/12 {
 }
 
 * Remove erroneous substrings
-foreach var of varlist per_1-per_12 {
+foreach var of varlist per_1-per_16 {
 	qui replace `var' = subinstr(`var', ".", "", .)
 	qui replace `var' = subinstr(`var', "#", "", .)
 	qui replace `var' = subinstr(`var', ":", "", .)
@@ -141,8 +141,8 @@ foreach var of varlist per_1-per_12 {
 
 * Ignore empty entries and shift dataset to left-most variables
 qui gen byte imiss = .
-forval  j = 1/12  {  
-    forval i = 1/11 {
+forval  j = 1/16  {  
+    forval i = 1/15 {
        qui replace imiss = missing(per_`i')
        local next = `i' + 1
        qui replace per_`i' = per_`next' if imiss
@@ -254,4 +254,6 @@ replace loc = subinstr(loc, char(34), "",.)
 replace loc = itrim(strtrim(loc))
 
 ****** Generate unique id and save
+
 save "cleaned_ner_output.dta", replace
+export delimited using "cleaned_ner_output.csv", replace
