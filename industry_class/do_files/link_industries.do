@@ -33,7 +33,7 @@ drop if misc == ""
 rename misc text
 
 * Output excel file as labelled data
-export excel using "labelled_data_patents.csv", firstrow(variables)
+export excel using "labelled_data_patents.xlsx", firstrow(variables) replace
 
 
 
