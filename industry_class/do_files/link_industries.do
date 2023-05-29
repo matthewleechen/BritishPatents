@@ -32,9 +32,8 @@ drop _merge
 drop if misc == ""
 rename misc text
 
-* Output csv file as labelled data
-export delimited "labelled_data_patents.csv"
-
+* Output excel file as labelled data
+export excel using "labelled_data_patents.csv", firstrow(variables)
 
 
 
