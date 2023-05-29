@@ -1,4 +1,5 @@
 ## Curating a dataset of British patents (1617-1871)
+
 This repository contains the implementation for a deep learning pipeline to convert the following records written by Bennett Woodcroft into a structured dataset:
 * Titles of Patents of Invention, Chronologically Arranged _(Mar 1617-Oct 1852)_ 
 * Chronological Index of Patents Applied for and Patents Granted _(Oct 1852-Dec 1868)_
@@ -119,17 +120,17 @@ The inference process will result in a .csv file corresponding to each .txt file
 
 ### Industry classifications
 
-Given the information contained in the "MISC" NER class, this section trains a RoBERTa model to classify inventions into industry categories.
+Given the information contained in the "MISC" NER class, this section fine tunes [MacBERTh](https://huggingface.co/emanjavacas/MacBERTh), a BERT model pre-trained on historical English (c.1450-1950), to classify inventions into industry categories. The original paper that presents this model, Manjavacas, Enrique & Lauren Fonteyn (2022), _Adapting vs. Pre-training Language Models for Historical Languages_, is available [here](https://jdmdh.episciences.org/9690).
 
 #### Annotations 
 
 The annotated data is from the industry labels in [Nuvolari, Tartari & Tranchero (2021)](https://www.sciencedirect.com/science/article/pii/S0014498321000413#sec0014), _Patterns of innovation during the Industrial Revolution: A reappraisal using a composite indicator of patent quality_. Their data (available at openICPSR, linked [here](https://www.openicpsr.org/openicpsr/project/142801/version/V1/view)) contains labels for every patent between 1700-1850. These labels are based on the categories from their earlier paper, [Nuvolari & Tartari (2011)](https://www.sciencedirect.com/science/article/pii/S0014498310000471), _Bennet Woodcroft and the value of English patents, 1617–1841_. 
 
-I use the Nuvolari, Tartari & Tranchero (2021) labels for the period 1700-1850 as the ground truth to train a RoBERTa model to predict industry classes for the uncategorized patents between 1851-1871. First, I link the NER output dataset with their data to create a labelled dataset. The Stata code to do this is in [link_industries.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/industry_class/do_files/link_industries.do).
+I use the Nuvolari, Tartari & Tranchero (2021) labels for the period 1700-1850 as the ground truth to train a RoBERTa model to predict industry classes for the uncategorized patents between 1851-1871. First, I link the NER output dataset with their data to create a labelled .csv dataset. The Stata code to do this is in [link_industries.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/industry_class/do_files/link_industries.do).
 
-#### Fine Tuning
+#### Fine Tuning & Inference
 
-#### Inference
+The Jupyter notebook for implementing fine tuning and inference using MacBERTh is [industry_class_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/industry_class/industry_class_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/matthewleechen/Transformers-Tutorials/blob/master/BERT/Fine_tuning_BERT_(and_friends)_for_multi_label_text_classification.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
 
 
 
