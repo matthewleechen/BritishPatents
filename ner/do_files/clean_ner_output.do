@@ -256,4 +256,4 @@ replace loc = itrim(strtrim(loc))
 ****** Generate unique id and save
 
 save "cleaned_ner_output.dta", replace
-export delimited using "cleaned_ner_output.csv", replace
+export excel using "cleaned_ner_output.xlsx", firstrow(variables)
