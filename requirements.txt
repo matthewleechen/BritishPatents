@@ -1,0 +1,5 @@
+argparse
+opencv-python
+Pillow
+numpy
+pycocotools
