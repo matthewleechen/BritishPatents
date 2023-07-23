@@ -25,7 +25,7 @@ The digitization pipeline consists of two stages: (1) fine tuning a layout detec
 
 #### Annotations
 
-All the annotations are available as a .json file [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0), and as a COCO dataset [here](https://www.dropbox.com/s/gdpujktygeg79fm/annotations_woodcroft_patents.zip?dl=0). The original annotations can be edited and re-exported by importing the linked .json file into a [Label Studio](https://labelstud.io) project. The accompanying annotation schema is available [here](https://www.dropbox.com/s/bq9gqciksoxk6l8/annotation_schema.pdf?dl=0). The annotated bounding boxes can be visualized from the COCO dataset using the script [visualize_bounding_boxes.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/visualize_bounding_boxes.py). To run this script from the command line, assuming your COCO annotations are contained in the file ```result.json```, you can use
+All the annotations are available as a .json file [here](https://www.dropbox.com/s/o021e0a1t40181h/annotations_woodcroft_patents.json?dl=0), and as a COCO dataset [here](https://www.dropbox.com/s/gdpujktygeg79fm/annotations_woodcroft_patents.zip?dl=0). The original annotations can be edited and re-exported by importing the linked JSON file into a [Label Studio](https://labelstud.io) project. The accompanying annotation schema is available [here](https://www.dropbox.com/s/bq9gqciksoxk6l8/annotation_schema.pdf?dl=0). The annotated bounding boxes can be visualized from the COCO dataset using the script [visualize_bounding_boxes.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/visualize_bounding_boxes.py). To run this script from the command line, assuming your COCO annotations are contained in the file ```result.json```, you can use
 
 ```
 python visualize_bounding_boxes.py /path/to/image <image_id> /path/to/result.json
@@ -92,21 +92,21 @@ The merged text boxes that I use in this repository can be found [here](https://
 
 #### Annotations
 
-Annotations are made on a random sample of the patents. The script for randomly sampling a selected percentage (```<percent>```) of the patents and saving them to a .json file is [label_sample_select.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/label_sample_select.py). Note that the default percentage is 0.5% (```--percent 0.5```). This script generates a .json file, ```selected_patents.json``` when run. To run this, assuming you have a directory containing all the merged and cleaned .txt files, you can use
+Annotations are made on a random sample of the patents. The script for randomly sampling a selected percentage (```<percent>```) of the patents and saving them to a JSON file is [label_sample_select.py](https://github.com/matthewleechen/woodcroft_patents/blob/main/scripts/label_sample_select.py). Note that the default percentage is 0.5% (```--percent 0.5```). This script generates a JSON file, ```selected_patents.json``` when run. To run this, assuming you have a directory containing all the merged and cleaned text files, you can use
 
 ```
 python label_sample_select.py /path/to/directory --percent <percent> --seed <random_seed>
 ```
 
-This .json file is then uploaded to a Label Studio project task-by-task for labelling. The accompanying annotation schema is available [here](https://www.dropbox.com/s/z230vokn7627asy/ner_annotation_schema.pdf?dl=0). 
+This JSON is then uploaded to a Label Studio project task-by-task for labelling. The accompanying annotation schema is available [here](https://www.dropbox.com/s/z230vokn7627asy/ner_annotation_schema.pdf?dl=0). 
 
-The annotations were made in a [Label Studio](https://labelstud.io) project. All the annotations are available as a .conll file [here](https://www.dropbox.com/s/k2tkl0ftlj1i26x/ner_patents.conll?dl=0) (and as a .json file [here](https://www.dropbox.com/s/jqmnaml3s16jha5/ner_patents.json?dl=0)). The original annotations can be edited and re-exported by importing the linked .json file into a Label Studio project.
+The annotations were made in a [Label Studio](https://labelstud.io) project. All the annotations are available as a CONLL file [here](https://www.dropbox.com/s/k2tkl0ftlj1i26x/ner_patents.conll?dl=0) (and as a JSON file [here](https://www.dropbox.com/s/jqmnaml3s16jha5/ner_patents.json?dl=0)). The original annotations can be edited and re-exported by importing the linked JSON file into a Label Studio project.
 
 #### Fine-Tuning and Inference
 
 The Jupyter notebook for fine tuning BERT and running inference for named entity recognition is [ner_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/notebooks/ner_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/BERT/Custom_Named_Entity_Recognition_with_BERT.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). 
 
-To run inference, you are assumed to have an input directory consisting of .txt files that each correspond to one record book (e.g. ```input_dir```), and have an output directory that you want .csv files to exported to. The output is a .csv file containing the labelled classes as columns, and each patent being recorded as a row (observation). An example of your directory structure after running inference is:
+To run inference, you are assumed to have an input directory consisting of text files that each correspond to one record book (e.g. ```input_dir```), and have an output directory that you want CSVs to exported to. The output is a CSV file containing the labelled classes as columns, and each patent being recorded as a row (observation). An example of your directory structure after running inference is:
 
 ```
 working_dir
@@ -124,7 +124,7 @@ working_dir
 
 #### Post-Processing
 
-The inference process will result in a .csv file corresponding to each .txt file in the output directory. A Stata .do file that combines all .csv files and cleans the data is provided at [clean_ner_output.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/dofiles/clean_ner_output.do). Errors can be manually cross-referenced against the raw image scans for accuracy.
+The inference process will result in a CSV file corresponding to each text file in the output directory. A Stata do-file that combines all CSVs and cleans the data is provided at [clean_ner_output.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/dofiles/clean_ner_output.do). Errors can be manually cross-referenced against the raw image scans for accuracy.
 
 ### Industry classifications
 
@@ -138,7 +138,7 @@ I use the Nuvolari, Tartari & Tranchero (2021) labels for the period 1700-1850 a
 
 #### Fine Tuning & Inference
 
-The Jupyter notebook for implementing fine tuning and inference using MacBERTh is [industry_class_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/notebooks/industry_class_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/matthewleechen/Transformers-Tutorials/blob/master/BERT/Fine_tuning_BERT_(and_friends)_for_multi_label_text_classification.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). The notebook output will be an .xlsx dataset.
+The Jupyter notebook for implementing fine tuning and inference using MacBERTh is [industry_class_patents.ipynb](https://github.com/matthewleechen/woodcroft_patents/blob/main/notebooks/industry_class_patents.ipynb). This notebook is based on Niels Rogge's (extremely helpful!) notebook linked [here](https://github.com/matthewleechen/Transformers-Tutorials/blob/master/BERT/Fine_tuning_BERT_(and_friends)_for_multi_label_text_classification.ipynb), and uses the Transformers library (HuggingFace site [here](https://huggingface.co/docs/transformers/index)). The notebook output will be an Excel dataset.
 
 
 
