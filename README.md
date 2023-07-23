@@ -134,7 +134,7 @@ Given the information contained in the "MISC" NER class, this section fine tunes
 
 The annotated data is from the industry labels in [Nuvolari, Tartari & Tranchero (2021)](https://www.sciencedirect.com/science/article/pii/S0014498321000413#sec0014), _Patterns of innovation during the Industrial Revolution: A reappraisal using a composite indicator of patent quality_. Their data (available at openICPSR, linked [here](https://www.openicpsr.org/openicpsr/project/142801/version/V1/view)) contains labels for every patent between 1700-1850. These labels are based on the categories from their earlier paper, [Nuvolari & Tartari (2011)](https://www.sciencedirect.com/science/article/pii/S0014498310000471), _Bennet Woodcroft and the value of English patents, 1617–1841_. 
 
-I use the Nuvolari, Tartari & Tranchero (2021) labels for the period 1700-1850 as the ground truth to train a RoBERTa model to predict industry classes for the uncategorized patents between 1851-1871. First, I link the NER output dataset with their data to create a labelled .csv dataset. The Stata code to do this is in [link_industries.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/dofiles/link_industries.do).
+I use the Nuvolari, Tartari & Tranchero (2021) labels for the period 1700-1850 as the ground truth to train a RoBERTa model to predict industry classes for the uncategorized patents between 1851-1871. First, I link the NER output dataset with their data to create a labelled CSV dataset. The Stata code to do this is in [link_industries.do](https://github.com/matthewleechen/woodcroft_patents/blob/main/dofiles/link_industries.do).
 
 #### Fine Tuning & Inference
 
