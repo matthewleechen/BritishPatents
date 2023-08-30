@@ -1,5 +1,5 @@
-argparse
-opencv-python
-Pillow
-numpy
-pycocotools
+argparse==1.4.0
+opencv-python==4.8.0.76
+Pillow==9.3.0
+numpy==1.21.6
+pycocotools==2.0.6
